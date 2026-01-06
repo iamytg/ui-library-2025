@@ -1,0 +1,65 @@
+{
+  "name": "@iamytg/ui-library-2025",
+  "version": "0.0.1",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "main": "./dist/likely-ui-lib.umd.cjs",
+  "module": "./dist/likely-ui-lib.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/likely-ui-lib.js",
+      "require": "./dist/likely-ui-lib.umd.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "build:yalc": "pnpm build && yalc publish",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "devDependencies": {
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.1",
+    "@eslint/js": "9.39.2",
+    "@mui/material": "7.3.6",
+    "@mui/utils": "7.3.6",
+    "@types/node": "24",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "5.1.2",
+    "eslint": "9.39.2",
+    "eslint-plugin-react-hooks": "7.0.1",
+    "eslint-plugin-react-refresh": "0.4.26",
+    "globals": "17.0.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.52.0",
+    "vite": "npm:rolldown-vite@7.3.0",
+    "vite-plugin-dts": "4.5.4"
+  },
+  "peerDependencies": {
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.1",
+    "@mui/material": "7.3.6",
+    "axios": "1.13.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-is": "^19.2.0",
+    "universal-cookie": "8.0.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "vite": "npm:rolldown-vite@7.3.0"
+    }
+  }
+}
