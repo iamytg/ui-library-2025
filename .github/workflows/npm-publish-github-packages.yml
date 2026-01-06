@@ -18,8 +18,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: 'pnpm'
-      - run: pnpm install --frozen-lockfile
+          cache: "pnpm"
+      - run: pnpm install --no-frozen-lockfile
       - run: pnpm test
 
   publish-gpr:
@@ -37,8 +37,8 @@ jobs:
         with:
           node-version: 24
           registry-url: https://npm.pkg.github.com/
-          cache: 'pnpm'
-      - run: pnpm install --frozen-lockfile
+          cache: "pnpm"
+      - run: pnpm install --no-frozen-lockfile
       - run: pnpm build
       - run: pnpm publish --no-git-checks
         env:
