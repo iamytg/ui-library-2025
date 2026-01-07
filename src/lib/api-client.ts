@@ -17,7 +17,9 @@ interface ApiClientProps {
 
 const getCookieSetOptions: () => CookieSetOptions = () => {
   const isCSR = typeof window !== "undefined";
-  const domain = isCSR ? getDomain(document.location.href) : undefined;
+  const domain = isCSR
+    ? getDomain(document.location.href, { allowPrivateDomains: true })
+    : undefined;
 
   return {
     path: "/",
@@ -72,9 +74,13 @@ class ApiClient {
   };
 
   /** Refresh Token을 쿠키에 저장합니다. */
-  public setRefreshToken = (token: string): void => {
+  public setRefreshToken = (
+    token: string,
+    options?: CookieSetOptions
+  ): void => {
     this.cookies.set(this.REFRESH_TOKEN_KEY, token, {
       maxAge: 60 * 60 * 24 * 7,
+      ...options,
     });
   };
 
