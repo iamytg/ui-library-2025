@@ -4,20 +4,25 @@ import axios, {
   type InternalAxiosRequestConfig,
 } from "axios";
 import Cookies, { type CookieSetOptions } from "universal-cookie";
+import { getDomain } from "tldts";
 
 interface ApiClientProps {
   env: "production" | string;
   apiRefreshUrl: string;
+  tokenNamespace?: string;
 
   apiAuthBaseUrl: string;
   apiBBaseUrl?: string;
 }
 
 const getCookieSetOptions: () => CookieSetOptions = () => {
+  const isCSR = typeof window !== "undefined";
+  const domain = isCSR ? getDomain(document.location.href) : undefined;
+
   return {
     path: "/",
-    secure:
-      typeof window !== "undefined" && document.location.protocol === "https",
+    secure: isCSR && document.location.protocol === "https",
+    ...(domain ? { domain } : {}),
     // sameSite: "none",
   };
 };
@@ -38,13 +43,12 @@ class ApiClient {
   }> = [];
 
   constructor(props: ApiClientProps) {
+    const tokenPrefix = `${props.tokenNamespace ?? "putty"}_`;
+    const envSuffix = props.env === "production" ? "" : `_${props.env}`;
     this.apiRefreshUrl = props.apiRefreshUrl;
-    this.ACCESS_TOKEN_KEY = `accessToken${
-      props.env === "production" ? "" : `_${props.env}`
-    }`;
-    this.REFRESH_TOKEN_KEY = `refreshToken${
-      props.env === "production" ? "" : `_${props.env}`
-    }`;
+
+    this.ACCESS_TOKEN_KEY = `${tokenPrefix}accessToken${envSuffix}`;
+    this.REFRESH_TOKEN_KEY = `${tokenPrefix}refreshToken${envSuffix}`;
     this.cookies = new Cookies(null, getCookieSetOptions());
 
     this.variantAuth = this.createApiClient(props.apiAuthBaseUrl);

@@ -18,8 +18,23 @@ export default defineConfig({
     rollupOptions: {
       // 라이브러리에 포함하지 않을 디펜던시를 명시해주세요
       // external: ["vue"],
+      // external: [
+      //   /^(react|react-dom|@mui\/material|@emotion\/react|@emotion\/styled|axios|universal-cookie|tldts)/,
+      // ],
       external: [
-        /^(react|react-dom|@mui\/material|@emotion\/react|@emotion\/styled|axios|universal-cookie)/,
+        new RegExp(
+          `^(${[
+            "react",
+            "react-dom",
+            "@mui/material",
+            "@emotion/react",
+            "@emotion/styled",
+            "axios",
+            "universal-cookie",
+            "react-is",
+            "tldts",
+          ].join("|")})`
+        ),
       ],
       output: {
         // 라이브러리 외부에 존재하는 디펜던시를 위해
@@ -34,6 +49,7 @@ export default defineConfig({
           axios: "axios",
           "universal-cookie": "universalCookie",
           "react-is": "ReactIs",
+          tldts: "tldts",
         },
       },
     },
